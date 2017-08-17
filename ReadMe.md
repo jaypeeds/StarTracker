@@ -1,3 +1,6 @@
 # Star Tracker
 
-## Control of a stepepr motor for a "Barn Door Tracker"
+Control of a stepepr motor for a "Barn Door Tracker"
+
+Wiring
+![Wiring](wiring.jpg)
