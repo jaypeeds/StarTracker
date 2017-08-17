@@ -24,21 +24,24 @@ class StepperMotor:
     def step(self):
         if self.state != RunningState.RUNNING:
             return
-        values = self.program[self.pc]
-        self.execute_step(values)
+        self.execute_nth_step(self.pc)
         self.increment_pc()
 
+    def execute_nth_step(self, n):
+        self.execute_step(self.program[n])
+
+#   Also used to inject a program step like [0,0,0,0]
     def execute_step(self,values):
         for (w, v) in zip(self.wires, values):
             GPIO.output(w, v)
 
     def increment_pc(self):
         if self.direction > 0:
-            self.pc = self.pc + 1
-            if self.pc == len(self.program):
+            self.pc += 1
+            if self.pc >= len(self.program):
                 self.pc = 0
         else:
-            self.pc = self.pc - 1
+            self.pc -= 1
             if self.pc < 0:
                 self.pc = len(self.program) - 1
 
@@ -53,6 +56,7 @@ class StepperMotor:
 
     def stop(self):
         self.state = RunningState.STOPPED
+        # For each x in wires, lambda(x) = 0
         values = map(lambda x: 0, self.wires)
         self.execute_step(values)
         self.reset_pc()
@@ -82,6 +86,16 @@ class StepperMotor:
             self.speed -= 10
     
 
+    def reverse(self):
+        self.pause()
+        self.direction = - self.direction
+        self.resume()
+
+    def set_speed(self, seconds):
+        self.pause()
+        self.speed = seconds 
+        self.resume()
+
     def __init__(self, wires, mode, direction, speed):
         self.wires = wires
         self.mode = mode
@@ -92,5 +106,3 @@ class StepperMotor:
 
         for wire in wires:
             GPIO.setup(wire, GPIO.OUT, initial=GPIO.LOW)
-
-

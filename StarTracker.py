@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.5
 
 from flask import Flask
+from flask import request
 import RPi.GPIO as GPIO
 from StepperMotor import StepperMotor
 from SteppingMode import SteppingMode
@@ -9,23 +10,11 @@ import threading
 
 app = Flask(__name__)
 GPIO.setmode(GPIO.BCM)
-stepper = StepperMotor([17,18,22,27],SteppingMode.FULL_STEP, 1, 500)
+stepper = StepperMotor([17,18,22,27],SteppingMode.HALF_STEP, 1, 500)
 
 @app.route("/")
 def hello():
     return "Hello World!"
-
-@app.route("/on")
-def led_on():
-    GPIO.setup(17, GPIO.OUT, initial=GPIO.LOW)
-    GPIO.output(17, GPIO.HIGH)
-    return "on"
-
-@app.route("/off")
-def led_off():
-    GPIO.setup(17, GPIO.OUT, initial=GPIO.HIGH)
-    GPIO.output(17, GPIO.LOW)
-    return "off"
 
 @app.route("/step")
 def one_step():
@@ -66,6 +55,17 @@ def increase_speed():
 @app.route("/slower")
 def decrease_speed():
     stepper.slower()
+    return "Speed: %d" % (stepper.speed)
+
+@app.route("/reverse")
+def motor_reverse():
+    stepper.reverse()
+    return "Direction: %d" % (stepper.direction)
+
+@app.route("/seconds/<seconds>", methods=["POST"])
+def motor_speed(seconds):
+    assert seconds == request.view_args['seconds']
+    stepper.set_speed(int(seconds))
     return "Speed: %d" % (stepper.speed)
 
 if __name__ == "__main__":
