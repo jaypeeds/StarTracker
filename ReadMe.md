@@ -3,4 +3,4 @@
 Control of a stepepr motor for a "Barn Door Tracker"
 
 Wiring
-![Wiring](wiring.jpg)
+![Wiring](wiring-diagram.png)
