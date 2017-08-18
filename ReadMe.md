@@ -36,4 +36,6 @@ Wiring
 - WHITE = Coil B start
 - YELLOW = Coil B end
 
+Should a higher voltage be required for the stepper, it would be applied to pin 8 of L293D chip, instead of 5v.
+
 ![Wiring](/wiring-diagram.png)
