@@ -31,9 +31,9 @@ To reverse the direction just, reverse the direction of iteration through the ta
 
 Wiring
 
-RED = Coil A start
-BLUE = Coil A end
-WHITE = Coil B start
-YELLOW = Coil B end
+- RED = Coil A start
+- BLUE = Coil A end
+- WHITE = Coil B start
+- YELLOW = Coil B end
 
 ![Wiring](/wiring-diagram.png)
