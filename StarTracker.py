@@ -9,7 +9,8 @@ import threading
 
 app = Flask(__name__)
 #api = Api(app)
-stepper = StepperMotor([17,18,22,27],SteppingMode.HALF_STEP, 1, 500)
+#stepper = StepperMotor([17,18,22,27],SteppingMode.FULL_STEP, 1, 150)
+stepper = StepperMotor([17,18,22,27],SteppingMode.HALF_STEP, 1, 75)
 
 @app.route("/step")
 def one_step():
