@@ -9,7 +9,6 @@ Full step mode
 | GPIO17 | GPIO18 | GPIO22 | GPIO27 |
 |----|----|----|----|
 | A- | B- | A+ | B+ |
-|----|----|----|----|
 | 0 | 0 | 0 | 1 | 
 | 0 | 0 | 1 | 0 | 
 | 0 | 1 | 0 | 0 | 
@@ -21,7 +20,6 @@ Half step mode (slighly quieter than full step mode)
 | GPIO17 | GPIO18 | GPIO22 | GPIO27 |
 |----|----|----|----|
 | A- | B- | A+ | B+ |
-|----|----|----|----|
 | 0 | 0 | 0 | 1 | 
 | 0 | 0 | 1 | 1 | 
 | 0 | 0 | 1 | 0 | 
