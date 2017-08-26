@@ -7,6 +7,7 @@ Control of a stepepr motor for a "Barn Door Tracker"
 Full step mode
 
 | GPIO17 | GPIO18 | GPIO22 | GPIO27 |
+|----|----|----|----|
 | A- | B- | A+ | B+ |
 |----|----|----|----|
 | 0 | 0 | 0 | 1 | 
@@ -18,6 +19,7 @@ Full step mode
 Half step mode (slighly quieter than full step mode)
 
 | GPIO17 | GPIO18 | GPIO22 | GPIO27 |
+|----|----|----|----|
 | A- | B- | A+ | B+ |
 |----|----|----|----|
 | 0 | 0 | 0 | 1 | 
