@@ -45,11 +45,16 @@ Should a higher voltage be required for driving the stepper motor, it would be a
 Usage
 In one terminal window, start the service on default port 5000: 
 ```
-python3 ./STarTracker.py
+python3 ./StarTracker.py
 ```
 
 In a second terminal type one of commands without curly braces:
 ```
-wget http://127.0.0.1:5000/{start|stop|pause|resume|faster|slower|reverse}
+wget -o /dev/null http://127.0.0.1:5000/{start|stop|pause|resume|faster|slower|reverse}
+```
+
+Alternatively connect to a web browser to URL:
+```
+http://0.0.0.0:5000/tracker
 ```
 
