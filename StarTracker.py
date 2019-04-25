@@ -4,10 +4,13 @@ from flask import Flask, request, render_template
 from StepperMotor import StepperMotor
 from SteppingMode import SteppingMode
 from MotorTask import MotorTask
+import logging
 import threading
 
 app = Flask(__name__)
-#stepper = StepperMotor([17,18,22,27],SteppingMode.FULL_STEP, 1, 150)
+# Somewhat noisier
+# stepper = StepperMotor([17,18,22,27],SteppingMode.FULL_STEP, 1, 150)
+# Some heat with half-step
 stepper = StepperMotor([17,18,22,27],SteppingMode.HALF_STEP, 1, 75)
 
 @app.route("/step")
@@ -56,10 +59,22 @@ def motor_reverse():
     stepper.reverse()
     return "{'%s':'%d'}" % ("direction", stepper.direction) #, 204
 
-@app.route("/seconds/<seconds>", methods=["PUT","POST"])
-def motor_speed(seconds):
-    assert seconds == request.view_args['seconds']
-    stepper.set_speed(int(seconds))
+@app.route("/fast_rewind/<mins>", methods=["POST"])
+def motor_rewind():
+	assert mins == request.view_args['mins']
+    stepper.fast_rewind(mins)
+    return "{'%s':'%d'}" % ("rewind", mins) #, 204
+
+@app.route("/fastforward/<mins>", methods=["POST"])
+def motor_rewind():
+	assert mins == request.view_args['mins']
+    stepper.fast_forward(mins)
+    return "{'%s':'%d'}" % ("fast_forward", mins) #, 204
+
+@app.route("/speed/<millis>", methods=["POST"])
+def motor_speed(millis):
+    assert millis == request.view_args['millis']
+    stepper.set_speed(int(millis))
     return "{'%s':'%d'}" % ("speed", stepper.speed) #, 204
 
 @app.route('/<string:page_name>/')
@@ -67,5 +82,13 @@ def render_static(page_name):
         return render_template('%s.html' % page_name) #, 204
 
 if __name__ == "__main__":
+    logger = logging.getLogger("werkzeug")
+    handler = logging.FileHandler("access.log")
+    logger.addHandler(handler)
+
+    # Also add the handler to Flask's logger for cases
+    #  where Werkzeug isn't used as the underlying WSGI server.
+    app.logger.addHandler(handler)
+    #app.run(debug=True)
     app.run()
 

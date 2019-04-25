@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.5
 
+
 import time
 import RPi.GPIO as GPIO
 from SteppingMode import SteppingMode
@@ -91,11 +92,33 @@ class StepperMotor:
         self.direction = - self.direction
         self.resume()
 
-    def set_speed(self, seconds):
-        self.pause()
-        self.speed = seconds 
-        self.resume()
+    def fast_move(self, mins):
+		for t = 1 to mins:
+			self.step()
+ 		self.pause()
+		
 
+    def fast_rewind(self, mins):
+        self.pause()
+        self.direction = - self.direction
+		saved_speed = self.speed 
+		self.speed = 0
+		self.fast_move(mins)
+		self.speed = saved_speed
+		self.direction = - self.direction
+        
+    def fast_forward(self, mins):
+        self.pause()
+		saved_speed = self.speed 
+		self.speed = 0
+		self.fast_move(mins)
+		self.speed = saved_speed
+		
+    def set_speed(self, millis):
+        self.pause()
+        self.speed = millis 
+        self.resume()
+        
     def __init__(self, wires, mode, direction, speed):
         self.wires = wires
         self.mode = mode
