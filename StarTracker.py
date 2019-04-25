@@ -60,16 +60,16 @@ def motor_reverse():
     return "{'%s':'%d'}" % ("direction", stepper.direction) #, 204
 
 @app.route("/fast_rewind/<mins>", methods=["POST"])
-def motor_rewind():
+def motor_rewind(mins):
 	assert mins == request.view_args['mins']
-    stepper.fast_rewind(mins)
-    return "{'%s':'%d'}" % ("rewind", mins) #, 204
+	stepper.fast_rewind(int(mins))
+	return "{'%s':'%d'}" % ("rewind", int(mins)) #, 204
 
-@app.route("/fastforward/<mins>", methods=["POST"])
-def motor_rewind():
+@app.route("/fast_forward/<mins>", methods=["POST"])
+def motor_forward(mins):
 	assert mins == request.view_args['mins']
-    stepper.fast_forward(mins)
-    return "{'%s':'%d'}" % ("fast_forward", mins) #, 204
+	stepper.fast_forward(int(mins))
+	return "{'%s':'%d'}" % ("fast_forward", int(mins)) #, 204
 
 @app.route("/speed/<millis>", methods=["POST"])
 def motor_speed(millis):
