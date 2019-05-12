@@ -1,6 +1,6 @@
 # Star Tracker
 
-Control of a stepepr motor for a "Barn Door Tracker"
+Control of a stepper motor for a "Barn Door Tracker"
 
 ## Sequence on GPIO ports
 
